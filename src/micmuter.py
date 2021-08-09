@@ -1,28 +1,31 @@
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+import sys
 
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
-app = QApplication([])
+# Ensures that we have resources loaded
+from ui import micmuter_rc
+
+app = QtWidgets.QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
 
 # Adding an icon
-icon = QIcon("icon.png")
+icon = QtGui.QIcon(':/images/icon.png')
 
 # Adding item on the menu bar
-tray = QSystemTrayIcon()
+tray = QtWidgets.QSystemTrayIcon()
 tray.setIcon(icon)
 tray.setVisible(True)
 
 # Creating the options
-menu = QMenu()
-option1 = QAction("Geeks for Geeks")
-option2 = QAction("GFG")
-menu.addAction(option1)
-menu.addAction(option2)
+menu = QtWidgets.QMenu()
+configure = QtWidgets.QAction("Configure")
 
 # To quit the app
-quit = QAction("Quit")
+quit = QtWidgets.QAction("Quit")
 quit.triggered.connect(app.quit)
+
+menu.addAction(configure)
 menu.addAction(quit)
 
 # Adding options to the System Tray
