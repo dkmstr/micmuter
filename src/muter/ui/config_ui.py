@@ -63,8 +63,6 @@ class Ui_Configuration(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(Configuration)
-        self.buttonBox.accepted.connect(Configuration.accept)
-        self.buttonBox.rejected.connect(Configuration.reject)
         QtCore.QMetaObject.connectSlotsByName(Configuration)
 
     def retranslateUi(self, Configuration):
