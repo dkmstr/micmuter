@@ -1,69 +1,31 @@
-import typing
-
-import win32api
-import win32con
-import win32gui
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
-def main():
-    # get instance handle
-    hInstance = win32api.GetModuleHandle()
+app = QApplication([])
+app.setQuitOnLastWindowClosed(False)
 
-    # the class name
-    className = "MicMuter"
+# Adding an icon
+icon = QIcon("icon.png")
 
-    # create and initialize window class
-    wndClass = win32gui.WNDCLASS()
-    wndClass.style = win32con.CS_HREDRAW | win32con.CS_VREDRAW
-    wndClass.lpfnWndProc = wndProc
-    wndClass.hInstance = hInstance
-    wndClass.hIcon = win32gui.LoadIcon(0, win32con.IDI_APPLICATION)
-    wndClass.hCursor = win32gui.LoadCursor(0, win32con.IDC_ARROW)
-    wndClass.hbrBackground = win32gui.GetStockObject(win32con.WHITE_BRUSH)
-    wndClass.lpszClassName = className
+# Adding item on the menu bar
+tray = QSystemTrayIcon()
+tray.setIcon(icon)
+tray.setVisible(True)
 
-    # register window class
-    wndClassAtom = None
-    try:
-        wndClassAtom = win32gui.RegisterClass(wndClass)
-    except Exception as e:
-        print(e)
-        raise
+# Creating the options
+menu = QMenu()
+option1 = QAction("Geeks for Geeks")
+option2 = QAction("GFG")
+menu.addAction(option1)
+menu.addAction(option2)
 
-    hWindow = win32gui.CreateWindow(
-        wndClassAtom,  # it seems message dispatching only works with the atom, not the class name
-        "MicMuter",
-        win32con.WS_OVERLAPPEDWINDOW,
-        win32con.CW_USEDEFAULT,
-        win32con.CW_USEDEFAULT,
-        win32con.CW_USEDEFAULT,
-        win32con.CW_USEDEFAULT,
-        0,
-        0,
-        hInstance,
-        None,
-    )
+# To quit the app
+quit = QAction("Quit")
+quit.triggered.connect(app.quit)
+menu.addAction(quit)
 
-    # Show & update the window
-    win32gui.ShowWindow(hWindow, win32con.SW_SHOWNORMAL)
-    win32gui.UpdateWindow(hWindow)
+# Adding options to the System Tray
+tray.setContextMenu(menu)
 
-    # Dispatch messages
-    win32gui.PumpMessages()
-
-
-def wndProc(hWnd, message: int, wParam: typing.Any, lParam: typing.Any):
-
-    if message == win32con.WM_PAINT:
-        return 0
-    elif message == win32con.WM_DESTROY:
-        print('Being destroyed')
-        win32gui.PostQuitMessage(0)
-        return 0
-    else:
-        print('message: ', message)
-        return win32gui.DefWindowProc(hWnd, message, wParam, lParam)
-
-
-if __name__ == "__main__":
-    main()
+app.exec_()
