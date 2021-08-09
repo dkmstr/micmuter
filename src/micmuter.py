@@ -4,7 +4,7 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 # Ensures that we have resources loaded
-from ui import micmuter_rc
+from muter.ui import micmuter_rc
 
 app = QtWidgets.QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
