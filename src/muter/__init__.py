@@ -3,6 +3,7 @@ import sys
 from . import keycodes
 
 if sys.platform == 'win32':
-    from windows import keys
+    from . import windows as system
 else:
-    from linux import keys
+    from . import linux as system
+

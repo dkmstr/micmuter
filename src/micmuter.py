@@ -10,16 +10,18 @@ app = QtWidgets.QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
 
 # Adding an icon
-icon = QtGui.QIcon(':/images/icon.png')
+iconLight = QtGui.QIcon(':/images/icon-light.png')
+iconDark = QtGui.QIcon(':/images/icon-dark.png')
 
 # Adding item on the menu bar
 tray = QtWidgets.QSystemTrayIcon()
-tray.setIcon(icon)
+tray.setIcon(iconLight)
 tray.setVisible(True)
 
 # Creating the options
 menu = QtWidgets.QMenu()
 configure = QtWidgets.QAction("Configure")
+configure.triggered.connect(lambda: tray.setIcon(iconDark))
 
 # To quit the app
 quit = QtWidgets.QAction("Quit")

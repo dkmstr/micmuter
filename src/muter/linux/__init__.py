@@ -1,8 +1,5 @@
 import typing
 
-
-__all__ = ['isKeyPressed']
-
-# Get if key is pressed
-def isKeyPressed(key: int) -> bool:
-    return False  # TODO: Implement me!
+# Return if linux is configured with dark theme
+def usesDarkTheme() -> bool:
+    return False
