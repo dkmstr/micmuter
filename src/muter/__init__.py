@@ -1,2 +1,8 @@
+import sys
+
 from . import keycodes
-from . import keys
+
+if sys.platform == 'win32':
+    from windows import keys
+else:
+    from linux import keys

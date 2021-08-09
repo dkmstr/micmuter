@@ -35,4 +35,4 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Configuration"))
-from ui import micmuter_rc
+from muter.ui import micmuter_rc

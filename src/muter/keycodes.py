@@ -1,4 +1,10 @@
-import win32con
+import sys
+
+if sys.platform == 'win32':
+	import win32con
+	RETURN = win32con.VK_RETURN
+else:
+	RETURN = 13
 
 # base got from here: https://raw.githubusercontent.com/btsdev/global_hotkeys/master/global_hotkeys/keycodes.py
 
@@ -26,7 +32,7 @@ vk_key_names = {
 	'select':0x29,
 	'print':0x2A,
 	'execute':0x2B,
-	"enter": win32con.VK_RETURN,
+	"enter": RETURN,
 	'print_screen':0x2C,
 	'insert':0x2D,
 	'delete':0x2E,
