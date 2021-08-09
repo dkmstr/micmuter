@@ -5,9 +5,18 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
 # Ensures that we have resources loaded
-from muter.ui import micmuter_rc
-
 import muter
+
+class ConfigWindow(QtWidgets.QDialog, muter.ui.config_ui.Ui_Configuration):
+    def __init__(self, parent=None):
+        super(ConfigWindow, self).__init__(parent)
+        self.setupUi(self)
+
+        self.buttonBox.accepted.connect(self.save_config)
+        self.buttonBox.rejected.connect(self.close)
+
+    def save_config(self):
+        pass
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
@@ -19,30 +28,37 @@ def main():
     if muter.system.usesDarkTheme():
         app.setStyle(QtWidgets.QStyleFactory.create('Fusion'))
         darkPalette = QtGui.QPalette()
-        darkColor = QtGui.QColor(45,45,45)
-        disabledColor = QtGui.QColor(127,127,127)
+        darkColor = QtGui.QColor(45, 45, 45)
+        disabledColor = QtGui.QColor(127, 127, 127)
         darkPalette.setColor(QtGui.QPalette.Window, darkColor)
         darkPalette.setColor(QtGui.QPalette.WindowText, QtCore.Qt.white)
-        darkPalette.setColor(QtGui.QPalette.Base, QtGui.QColor(18,18,18))
+        darkPalette.setColor(QtGui.QPalette.Base, QtGui.QColor(18, 18, 18))
         darkPalette.setColor(QtGui.QPalette.AlternateBase, darkColor)
         darkPalette.setColor(QtGui.QPalette.ToolTipBase, QtCore.Qt.white)
         darkPalette.setColor(QtGui.QPalette.ToolTipText, QtCore.Qt.white)
         darkPalette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
-        darkPalette.setColor(QtGui.QPalette.Disabled, QtGui.QPalette.Text, disabledColor)
+        darkPalette.setColor(
+            QtGui.QPalette.Disabled, QtGui.QPalette.Text, disabledColor
+        )
         darkPalette.setColor(QtGui.QPalette.Button, darkColor)
         darkPalette.setColor(QtGui.QPalette.ButtonText, QtCore.Qt.white)
-        darkPalette.setColor(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, disabledColor)
+        darkPalette.setColor(
+            QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, disabledColor
+        )
         darkPalette.setColor(QtGui.QPalette.BrightText, QtCore.Qt.red)
         darkPalette.setColor(QtGui.QPalette.Link, QtGui.QColor(42, 130, 218))
         darkPalette.setColor(QtGui.QPalette.Highlight, QtGui.QColor(42, 130, 218))
         darkPalette.setColor(QtGui.QPalette.HighlightedText, QtCore.Qt.black)
-        darkPalette.setColor(QtGui.QPalette.Disabled, QtGui.QPalette.HighlightedText, disabledColor)
+        darkPalette.setColor(
+            QtGui.QPalette.Disabled, QtGui.QPalette.HighlightedText, disabledColor
+        )
 
         app.setPalette(darkPalette)
 
-        app.setStyleSheet('QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }')
+        app.setStyleSheet(
+            'QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }'
+        )
         icon = QtGui.QIcon(':/images/icon-dark.png')
-
 
     # Adding item on the menu bar
     tray = QtWidgets.QSystemTrayIcon()
@@ -52,6 +68,7 @@ def main():
     # Creating the options
     menu = QtWidgets.QMenu()
     configure = QtWidgets.QAction("Configure")
+    configure.triggered.connect(lambda: ConfigWindow().exec_())
 
     # To quit the app
     quit = QtWidgets.QAction("Quit")
