@@ -11,19 +11,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.setWindowModality(QtCore.Qt.WindowModal)
-        Form.resize(371, 162)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/icon-light.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Form.setWindowIcon(icon)
-        Form.setLayoutDirection(QtCore.Qt.LeftToRight)
-        Form.setAutoFillBackground(False)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
+class Ui_Configuration(object):
+    def setupUi(self, Configuration):
+        Configuration.setObjectName("Configuration")
+        Configuration.resize(399, 136)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Configuration.sizePolicy().hasHeightForWidth())
+        Configuration.setSizePolicy(sizePolicy)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Configuration)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.audio = QtWidgets.QWidget(Form)
+        self.audio = QtWidgets.QWidget(Configuration)
         self.audio.setObjectName("audio")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.audio)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -40,7 +39,7 @@ class Ui_Form(object):
         self.audioCombo.setObjectName("audioCombo")
         self.horizontalLayout.addWidget(self.audioCombo)
         self.verticalLayout.addWidget(self.audio)
-        self.hotkey = QtWidgets.QWidget(Form)
+        self.hotkey = QtWidgets.QWidget(Configuration)
         self.hotkey.setObjectName("hotkey")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.hotkey)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -57,21 +56,19 @@ class Ui_Form(object):
         self.hotkeyCombo.setObjectName("hotkeyCombo")
         self.horizontalLayout_2.addWidget(self.hotkeyCombo)
         self.verticalLayout.addWidget(self.hotkey)
-        self.buttons = QtWidgets.QDialogButtonBox(Form)
-        self.buttons.setAutoFillBackground(False)
-        self.buttons.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Save)
-        self.buttons.setCenterButtons(False)
-        self.buttons.setObjectName("buttons")
-        self.verticalLayout.addWidget(self.buttons)
+        self.buttonBox = QtWidgets.QDialogButtonBox(Configuration)
+        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setObjectName("buttonBox")
+        self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Form)
-        self.buttons.accepted.connect(Form.accepted)
-        self.buttons.rejected.connect(Form.rejected)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(Configuration)
+        self.buttonBox.accepted.connect(Configuration.accept)
+        self.buttonBox.rejected.connect(Configuration.reject)
+        QtCore.QMetaObject.connectSlotsByName(Configuration)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Configuration):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Configuration"))
-        self.label.setText(_translate("Form", "Audio Device"))
-        self.label_2.setText(_translate("Form", "Hot Key"))
-from muter.ui import micmuter_rc
+        Configuration.setWindowTitle(_translate("Configuration", "Dialog"))
+        self.label.setText(_translate("Configuration", "Audio Device"))
+        self.label_2.setText(_translate("Configuration", "Hot Key"))
