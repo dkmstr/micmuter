@@ -90,6 +90,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="micmuter.qrc"/>
+ </resources>
  <connections/>
 </ui>
