@@ -1,4 +1,5 @@
-#!/bin/python3
+# very slighly modified by me
+# original on https://gist.github.com/v3nturetheworld/b43c775a4fa52a8bd8cef0d50a6bc79a
 
 # This is a slimmed down version of the pycaw module.
 # https://github.com/AndreMiras/pycaw/blob/develop/pycaw/pycaw.py
