@@ -7,3 +7,5 @@ LIGHT_VALUE = 'AppsUseLightTheme'
 def usesDarkTheme() -> bool:
     return QtCore.QSettings(THEME_KEY,QtCore.QSettings.NativeFormat).value(LIGHT_VALUE) == 0
 
+from . import keys
+from . import sound

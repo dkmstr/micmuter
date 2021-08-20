@@ -162,3 +162,5 @@ vk_key_names: typing.Mapping[str, int] = {
     "'": 0xDE,
     '`': 0xC0,
 }
+
+vk_name_keys = { v: k for k, v in vk_key_names.items() }

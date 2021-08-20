@@ -8,23 +8,20 @@ class Settings(typing.NamedTuple):
     """
     Settings for the muter
     """
-    device: str
-    hotkey: str
+    hotkey: int = 0
 
     @staticmethod
-    def read(self) -> 'Settings':
+    def read() -> 'Settings':
         """
         Create a Settings object from a QSettings object
         """
         return Settings(
-            settings.value('device', type=str),
-            settings.value('hotkey', type=str)
+            int(settings.value('hotkey', type=int))
         )
 
     def save(self) -> None:
         """
         Save the settings to a QSettings object
         """
-        settings.setValue('device', self.device)
         settings.setValue('hotkey', self.hotkey)
 
