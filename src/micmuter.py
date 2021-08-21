@@ -32,10 +32,13 @@ class MicMuterWindow(QtWidgets.QMainWindow):
         self.audio.unMuteMicrophone()
 
     def nativeEvent(self, eventType, message) -> typing.Tuple[bool, int]:
-        if eventType == "windows_generic_MSG":
-            msg = muter.system.events.as_event(message)
-            if msg.message == muter.system.events.HOTKEY_EVENT:
-                self.toggle_mute()
+        try:
+            if eventType == "windows_generic_MSG":
+                msg = muter.system.events.as_event(message)
+                if msg.message == muter.system.events.HOTKEY_EVENT:
+                    self.toggle_mute()
+        except Exception:
+            pass
         return super().nativeEvent(eventType, message)
 
     def setTray(self, tray: 'MicMuterTray'):
