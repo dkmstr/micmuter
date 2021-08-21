@@ -48,10 +48,10 @@ class MicMuterWindow(QtWidgets.QMainWindow):
         self.audio.toggleMute()
         if self.tray:
             if self.audio.is_muted:
-                muter.alert.play(muter.alert.offSound)
+                muter.alert.play('off.wav')
                 self.tray.setIcon(QtGui.QIcon(":/images/icon-red.png"))
             else:
-                muter.alert.play(muter.alert.onSound)
+                muter.alert.play('on.wav')
                 self.tray.setIcon(QtGui.QIcon(":/images/icon-green.png"))
 
 
