@@ -12,6 +12,7 @@ import muter
 
 audio = muter.system.sound.AudioUtilities()
 
+
 class MicMuterWindow(QtWidgets.QMainWindow):
     def __init__(
         self,
@@ -32,17 +33,16 @@ class MicMuterWindow(QtWidgets.QMainWindow):
         return super().nativeEvent(eventType, message)
 
     def toggle_mute(self) -> None:
-        print('Toggling mute')
         audio.toggleMute()
 
 
-
 class MicMuterTray(QtWidgets.QSystemTrayIcon):
-    def __init__(self, icon: QtGui.QIcon, parent: typing.Optional[QtWidgets.QWidget] = None):
+    def __init__(
+        self, icon: QtGui.QIcon, parent: typing.Optional[QtWidgets.QWidget] = None
+    ):
         super().__init__(icon, parent)
         self.setVisible(True)
         # self.activated.connect(self.on_activated)
-
 
 
 def main() -> None:
@@ -60,13 +60,16 @@ def main() -> None:
     # Register hotkey
     config = muter.settings.Settings.read()
     hotkey = config.hotkey
+
     if hotkey:
-        muter.system.events.registerHotkey(mainWindow.winId(), hotkey, hotkey, 0)
+        muter.system.events.registerHotkey(mainWindow.winId(), 0x01, hotkey, 0)
 
     # Creating the options
     menu = QtWidgets.QMenu()
     configure = QtWidgets.QAction("Configure")
-    configure.triggered.connect(lambda: muter.ui.config_window.ConfigWindow(mainWindow, icon=icon).exec_())
+    configure.triggered.connect(
+        lambda: muter.ui.config_window.ConfigWindow(mainWindow, icon=icon).exec_()
+    )
 
     # To quit the app
     quit = QtWidgets.QAction("Quit")
@@ -79,6 +82,8 @@ def main() -> None:
     tray.setContextMenu(menu)
 
     app.exec_()
+
+    audio.unMuteMicrophone()  # Ensure mic is unmuted before exiting
 
 
 if __name__ == '__main__':
