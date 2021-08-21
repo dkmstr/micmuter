@@ -412,7 +412,7 @@ class AudioUtilities:
     def __init__(self):
         self.is_muted = False
 
-    def GetMicrophones(self) -> IMMDevice:
+    def getMicrophones(self) -> IMMDevice:
         deviceEnumerator = comtypes.CoCreateInstance(
             CLSID_MMDeviceEnumerator, IMMDeviceEnumerator, comtypes.CLSCTX_INPROC_SERVER
         )
@@ -425,8 +425,8 @@ class AudioUtilities:
         logger.debug("Audio Devices Found: {}".format(audio_input_devices))
         return audio_input_devices
 
-    def MuteMicrophone(self) -> None:
-        mics = self.GetMicrophones()
+    def muteMicrophone(self) -> None:
+        mics = self.getMicrophones()
         try:
             interface = mics.Activate(
                 IAudioEndpointVolume._iid_, comtypes.CLSCTX_ALL, None
@@ -440,8 +440,8 @@ class AudioUtilities:
             logger.error("EXCEPTION [MuteMicrophone]: {}".format(e))
             raise
 
-    def UnMuteMicrophone(self) -> None:
-        mics = self.GetMicrophones()
+    def unMuteMicrophone(self) -> None:
+        mics = self.getMicrophones()
         try:
             interface = mics.Activate(
                 IAudioEndpointVolume._iid_, comtypes.CLSCTX_ALL, None
@@ -456,11 +456,11 @@ class AudioUtilities:
             raise
 
     # Call this function to mute if is_muted = False, otherwise it'll unmute the mics
-    def toggle_mute(self):
+    def toggleMute(self):
         if self.is_muted == False:
-            self.MuteMicrophone()
+            self.muteMicrophone()
         else:
-            self.UnMuteMicrophone()
+            self.unMuteMicrophone()
 
 
 # Main Entry Point
@@ -472,16 +472,16 @@ if __name__ == "__main__":
     # Create a Microphone controller object
     test_audio_control = AudioUtilities()
     # Mute the Microphone
-    test_audio_control.MuteMicrophone()
+    test_audio_control.muteMicrophone()
     # sleep for 3 seconds for testing purposes
     sleep(3)
-    test_audio_control.UnMuteMicrophone()
+    test_audio_control.unMuteMicrophone()
     # Microphone Unmuted. Done with this example,
 
     # Example using toggle function
     logger.debug("\n\nToggle Test")
     logger.debug("toggle on")
-    test_audio_control.toggle_mute()
+    test_audio_control.toggleMute()
     sleep(3)
     logger.debug("toggle off")
-    test_audio_control.toggle_mute()
+    test_audio_control.toggleMute()
