@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="images">
+    <file>icon-green.png</file>
+    <file>icon-red.png</file>
     <file>icon-light.png</file>
     <file>icon-dark.png</file>
   </qresource>

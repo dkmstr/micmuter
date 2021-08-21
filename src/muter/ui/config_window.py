@@ -10,16 +10,15 @@ from . import config_ui
 
 class ConfigWindow(QtWidgets.QDialog, config_ui.Ui_Configuration):
     config: settings.Settings
-    def __init__(self, parent: typing.Optional[QtWidgets.QWidget] = None, icon: typing.Optional[QtGui.QIcon] = None) -> None:
+    def __init__(self, parent: typing.Optional[QtWidgets.QWidget] = None) -> None:
         from muter import system
         super(ConfigWindow, self).__init__(parent)
         self.config = settings.Settings.read()
+
         self.setupUi(self)
 
         self.buttonBox.accepted.connect(self.save_config)
         self.buttonBox.rejected.connect(self.close)
-        if icon:
-            self.setWindowIcon(icon)
 
         if self.config.hotkey:
             self.hotKey.setText(keycodes.vk_name_keys[self.config.hotkey].upper())

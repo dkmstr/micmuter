@@ -2,3 +2,5 @@ __pycache__
 .mypy_cache
 src/dist
 src/build
+*.pyo
+*.pyc
