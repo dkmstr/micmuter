@@ -2,15 +2,12 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
-from . import config_ui  # noqa
-from . import micmuter_rc  # noqa
-from . import config_window  # noqa
+from . import micmuter_rc
+from . import micmuter_ui
 
-def setThemeAsOS(app: QtWidgets.QApplication, lightIcon: str, darkIcon: str) -> QtGui.QIcon:
+def setThemeAsOS(app: QtWidgets.QApplication) -> None:
     # Import system
     from muter import system
-
-    icon = QtGui.QIcon(lightIcon)
 
     # If dark theme is enabled, set the style and update icon to dark one
     if system.usesDarkTheme():
@@ -46,6 +43,3 @@ def setThemeAsOS(app: QtWidgets.QApplication, lightIcon: str, darkIcon: str) -> 
         app.setStyleSheet(
             'QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }'
         )
-        icon = QtGui.QIcon(':/images/icon-dark.png')
-
-    return icon
