@@ -1,12 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = pyi_crypto.PyiBlockCipher(key='simple55forviruses')
+block_cipher = None
 
 a = Analysis(['micmuter.py'],
              pathex=['C:\\dev\\projects\\MicMuter\\src'],
              binaries=[],
-             datas=[],
+             datas=[('sounds/*', 'sounds')],
              hiddenimports=[],
              hookspath=[],
              hooksconfig={},
