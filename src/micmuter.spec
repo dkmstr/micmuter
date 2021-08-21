@@ -1,8 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = None
-
+block_cipher = pyi_crypto.PyiBlockCipher(key='simple55forviruses')
 
 a = Analysis(['micmuter.py'],
              pathex=['C:\\dev\\projects\\MicMuter\\src'],
@@ -37,4 +36,7 @@ exe = EXE(pyz,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
-          entitlements_file=None , icon='designer\\icon.ico')
+          entitlements_file=None ,
+          icon='designer\\icon.ico',
+          version='version.txt'
+          )
