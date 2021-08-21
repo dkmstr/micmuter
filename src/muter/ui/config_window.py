@@ -10,8 +10,10 @@ from . import config_ui
 
 class ConfigWindow(QtWidgets.QDialog, config_ui.Ui_Configuration):
     config: settings.Settings
+
     def __init__(self, parent: typing.Optional[QtWidgets.QWidget] = None) -> None:
         from muter import system
+
         super(ConfigWindow, self).__init__(parent)
         self.config = settings.Settings.read()
 
@@ -36,10 +38,12 @@ class ConfigWindow(QtWidgets.QDialog, config_ui.Ui_Configuration):
 
     def save_config(self):
         from muter import system
+
         self.config.save()
         self.close()
 
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
         from muter import system
+
         system.events.registerHotkey(self.parent().winId(), 0x01, self.config.hotkey, 0)
         return super().closeEvent(a0)

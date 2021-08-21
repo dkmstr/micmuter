@@ -48,8 +48,10 @@ class MicMuterWindow(QtWidgets.QMainWindow):
         self.audio.toggleMute()
         if self.tray:
             if self.audio.is_muted:
+                muter.alert.play(muter.alert.offSound)
                 self.tray.setIcon(QtGui.QIcon(":/images/icon-red.png"))
             else:
+                muter.alert.play(muter.alert.onSound)
                 self.tray.setIcon(QtGui.QIcon(":/images/icon-green.png"))
 
 
@@ -61,10 +63,12 @@ class MicMuterTray(QtWidgets.QSystemTrayIcon):
         self.setVisible(True)
         # self.activated.connect(self.on_activated)
 
+
 def main() -> None:
     try:
         # Include in try/except block if you're also targeting Mac/Linux
         from PyQt5.QtWinExtras import QtWin  # type: ignore
+
         myappid = 'dkmaster.micmuter.micmuter.1.0.0'
         QtWin.setCurrentProcessExplicitAppUserModelID(myappid)  # type: ignore
     except Exception:
@@ -97,7 +101,6 @@ def main() -> None:
             config.exec()
         except Exception as e:
             print(e)
-
 
     # Creating the options
     menu = QtWidgets.QMenu()
