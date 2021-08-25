@@ -1,6 +1,6 @@
 import typing
 
-from PyQt5 import QtCore
+from PySide2 import QtCore
 
 settings = QtCore.QSettings('Dkmaster', 'MicMuter')
 
@@ -16,7 +16,7 @@ class Settings(typing.NamedTuple):
         Create a Settings object from a QSettings object
         """
         return Settings(
-            int(settings.value('hotkey', type=int))
+            typing.cast(int, settings.value('hotkey', type=int))
         )
 
     def save(self) -> None:

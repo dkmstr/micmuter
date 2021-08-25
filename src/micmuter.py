@@ -1,9 +1,7 @@
 import sys
 import typing
 
-from PyQt5 import QtGui
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
+from PySide2 import QtWidgets, QtGui, QtCore
 
 
 # Ensures that we have resources loaded
@@ -39,7 +37,7 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
         self.actionQuit.triggered.connect(self.app.quit)
         self.actionMinimizeToTray.triggered.connect(self.close)
 
-    def nativeEvent(self, eventType, message) -> typing.Tuple[bool, int]:
+    def nativeEvent(self, eventType, message) -> typing.Tuple:
         try:
             if self.tray and eventType == "windows_generic_MSG":
                 msg = muter.system.events.as_event(message)
@@ -115,7 +113,7 @@ class MicMuterTray(QtWidgets.QSystemTrayIcon):
 
 def main() -> None:
     try:
-        from PyQt5.QtWinExtras import QtWin  # type: ignore
+        from PySide2.QtWinExtras import QtWin  # type: ignore
 
         myappid = 'dkmaster.micmuter.micmuter.1.0.0'
         QtWin.setCurrentProcessExplicitAppUserModelID(myappid)  # type: ignore
@@ -154,7 +152,7 @@ def main() -> None:
     # Adding options to the System Tray
     tray.setContextMenu(menu)
 
-    app.exec()
+    app.exec_()
 
     mainWindow.unmute()
 
