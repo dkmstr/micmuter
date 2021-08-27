@@ -29,13 +29,13 @@ VSVersionInfo(
       [
       StringTable(
         u'000004b0',
-        [StringStruct(u'CompanyName', u'Adolfo Gómez'),
-        StringStruct(u'FileDescription', u'Simple Mic Mutter For Windows'),
-        StringStruct(u'FileVersion', u'1.0.0'),
+        [StringStruct(u'CompanyName', u'Adolfo Gómez & Mario Gómez'),
+        StringStruct(u'FileDescription', u'Mic Muter'),
+        StringStruct(u'FileVersion', u'1.0.1'),
         StringStruct(u'InternalName', u'MicMuter'),
-        StringStruct(u'LegalCopyright', u'BSD-3'),
+        StringStruct(u'LegalCopyright', u'BSD3'),
         StringStruct(u'ProductName', u'Mic Muter'),
-        StringStruct(u'ProductVersion', u'1.0.0')])
+        StringStruct(u'ProductVersion', u'1.0.1')])
       ]), 
     VarFileInfo([VarStruct(u'Translation', [0, 1200])])
   ]

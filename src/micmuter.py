@@ -122,6 +122,7 @@ def main() -> None:
 
     app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
+    app.commitDataRequest.connect(lambda *p: app.quit())
 
     muter.ui.setThemeAsOS(app)
 
@@ -142,11 +143,21 @@ def main() -> None:
     configure = QtWidgets.QAction("Configure")
     configure.triggered.connect(lambda: mainWindow.show())
 
+    # About
+    about = QtWidgets.QAction("About")
+    about.triggered.connect(lambda: QtWidgets.QMessageBox.about(
+        mainWindow, 'Mic Muter', 
+        'Simple aplication to mute/unmute microphone with one key\n' +
+        'Developed by Adolfo Gómez & Mario Gómez 2021'
+    ))
+
     # To quit the app
     quit = QtWidgets.QAction("Quit")
     quit.triggered.connect(app.quit)
 
     menu.addAction(configure)  # Adding the configure option to the menu
+    menu.addSeparator()
+    menu.addAction(about)  # Adding the about option to the menu
     menu.addAction(quit)  # Adding the quit option to the menu
 
     # Adding options to the System Tray
