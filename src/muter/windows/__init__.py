@@ -9,3 +9,4 @@ def usesDarkTheme() -> bool:
 
 from . import events
 from . import sound
+from . import alert
