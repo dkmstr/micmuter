@@ -1,3 +1,7 @@
 PySide2
-comtypes
+# Windows:
+# comtypes
 # pyinstaller
+
+# Linux:
+pyalsa
