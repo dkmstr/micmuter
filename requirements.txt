@@ -4,4 +4,4 @@ PySide2
 # pyinstaller
 
 # Linux:
-pyalsa
+alsaaudio

@@ -7,8 +7,8 @@ if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
     # frozen
     base_dir = sys._MEIPASS  # type: ignore
 else:
-    base_dir = str(pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute())
+    base_dir = str(pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent.parent.absolute())
 
-def play(sound: str):
+def play(sound: str) -> None:
     winsound.PlaySound(os.path.join(base_dir, 'sounds', sound), winsound.SND_ASYNC)
 
