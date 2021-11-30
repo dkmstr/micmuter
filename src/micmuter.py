@@ -1,7 +1,7 @@
 import sys
 import typing
 
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide6 import QtWidgets, QtGui, QtCore
 
 
 # Ensures that we have resources loaded
@@ -37,7 +37,7 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
         self.actionQuit.triggered.connect(self.app.quit)
         self.actionMinimizeToTray.triggered.connect(self.close)
 
-    def nativeEvent(self, eventType, message) -> typing.Tuple:
+    def nativeEvent(self, eventType, message) -> typing.Tuple[object, int]:
         try:
             if self.tray and eventType == "windows_generic_MSG":
                 msg = muter.system.events.as_event(message)
@@ -140,11 +140,11 @@ def main() -> None:
 
     # Creating the options
     menu = QtWidgets.QMenu()
-    configure = QtWidgets.QAction("Configure")
+    configure = QtGui.QAction("Configure")
     configure.triggered.connect(lambda: mainWindow.show())
 
     # About
-    about = QtWidgets.QAction("About")
+    about = QtGui.QAction("About")
     about.triggered.connect(lambda: QtWidgets.QMessageBox.about(
         mainWindow, 'Mic Muter', 
         'Simple aplication to mute/unmute microphone with one key\n' +
@@ -152,7 +152,7 @@ def main() -> None:
     ))
 
     # To quit the app
-    quit = QtWidgets.QAction("Quit")
+    quit = QtGui.QAction("Quit")
     quit.triggered.connect(app.quit)
 
     menu.addAction(configure)  # Adding the configure option to the menu
@@ -163,7 +163,7 @@ def main() -> None:
     # Adding options to the System Tray
     tray.setContextMenu(menu)
 
-    app.exec_()
+    app.exec()
 
     mainWindow.unmute()
 
