@@ -14,6 +14,8 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
     audio: muter.system.sound.AudioUtilities
     config: muter.settings.Settings
     capturing: bool
+    timer: typing.Optional[QtCore.QTimer]
+    inTimer: bool
 
     def __init__(
         self,
@@ -33,6 +35,13 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
         if self.config.hotkey:
             self.hotKey.setText(muter.keycodes.vk_name_keys[self.config.hotkey].upper())
 
+        self.clipWait.setValue(self.config.clipWait)
+
+        # Connect clipboard change event
+        self.timer = None
+        self.inTimer = False
+        app.clipboard().dataChanged.connect(self.clipboardChanged)
+
         self.setHotkeyButton.clicked.connect(self.activateHotkeyCapture)
         self.actionQuit.triggered.connect(self.app.quit)
         self.actionMinimizeToTray.triggered.connect(self.close)
@@ -48,6 +57,11 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
         return super().nativeEvent(eventType, message)
 
     def closeEvent(self, event: QtCore.QEvent) -> None:
+        # If wait time changed, save it
+        if self.config.clipWait != self.clipWait.value():
+            self.config = self.config._replace(clipWait=self.clipWait.value())
+            self.config.save()
+
         event.ignore()
         self.hide()
         self.trayMessage('Mic muter running on background')
@@ -68,6 +82,19 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
                 self.hotKey.setText(str(vk))
         else:
             super().keyPressEvent(a0)
+
+    def cleanClipboard(self) -> None:
+        self.inTimer = True
+        self.app.clipboard().setText('')
+
+    def clipboardChanged(self) -> None:
+        if self.timer:
+            self.timer.stop()
+            self.timer = None
+        if not self.inTimer:
+            self.timer = QtCore.QTimer()
+            self.timer.singleShot(self.config.clipWait * 1000, self.cleanClipboard)  # type: ignore
+        self.inTimer = False
 
     def activateHotkeyCapture(self):
         self.capturing = True
