@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>296</width>
-    <height>62</height>
+    <width>305</width>
+    <height>121</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -84,6 +84,27 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="waitClip_frame">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Clipboard Wait</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="clipWait">
+        <property name="minimumSize">
+         <size>
+          <width>197</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -91,8 +112,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>296</width>
-     <height>21</height>
+     <width>305</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -16,16 +16,17 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLayout, QLineEdit,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
+    QLineEdit, QMainWindow, QMenu, QMenuBar,
+    QPushButton, QSizePolicy, QSpinBox, QVBoxLayout,
+    QWidget)
 from  . import micmuter_rc
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
-        mainWindow.resize(296, 62)
+        mainWindow.resize(305, 121)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -67,10 +68,26 @@ class Ui_mainWindow(object):
 
         self.verticalLayout.addWidget(self.hkey_frame)
 
+        self.waitClip_frame = QHBoxLayout()
+        self.waitClip_frame.setObjectName(u"waitClip_frame")
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+
+        self.waitClip_frame.addWidget(self.label)
+
+        self.clipWait = QSpinBox(self.centralwidget)
+        self.clipWait.setObjectName(u"clipWait")
+        self.clipWait.setMinimumSize(QSize(197, 0))
+
+        self.waitClip_frame.addWidget(self.clipWait)
+
+
+        self.verticalLayout.addLayout(self.waitClip_frame)
+
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(mainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 296, 21))
+        self.menubar.setGeometry(QRect(0, 0, 305, 22))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         mainWindow.setMenuBar(self.menubar)
@@ -90,6 +107,7 @@ class Ui_mainWindow(object):
         self.actionMinimizeToTray.setText(QCoreApplication.translate("mainWindow", u"Minimize", None))
         self.setHotkeyButton.setText(QCoreApplication.translate("mainWindow", u"Set Hotkey", None))
         self.hotKey.setPlaceholderText(QCoreApplication.translate("mainWindow", u"Press a key to assign the hot key", None))
+        self.label.setText(QCoreApplication.translate("mainWindow", u"Clipboard Wait", None))
         self.menuFile.setTitle(QCoreApplication.translate("mainWindow", u"File", None))
     # retranslateUi
 
