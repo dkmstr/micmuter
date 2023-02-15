@@ -323,7 +323,7 @@ class IMMDevice(IUnknown):
             (['in'], POINTER(GUID), 'iid'),
             (['in'], DWORD, 'dwClsCtx'),
             (['in'], POINTER(DWORD), 'pActivationParams'),
-            (['out'], POINTER(POINTER(IUnknown)), 'ppInterface'),
+            (['out'], POINTER(POINTER(IUnknown)), 'ppInterface'),  # type: ignore
         ),
         # HRESULT OpenPropertyStore(
         # [in] DWORD stgmAccess,
@@ -333,7 +333,7 @@ class IMMDevice(IUnknown):
             HRESULT,
             'OpenPropertyStore',
             (['in'], DWORD, 'stgmAccess'),
-            (['out'], POINTER(POINTER(IPropertyStore)), 'ppProperties'),
+            (['out'], POINTER(POINTER(IPropertyStore)), 'ppProperties'),  # type: ignore
         ),
         # HRESULT GetId([out] LPWSTR *ppstrId);
         COMMETHOD([], HRESULT, 'GetId', (['out'], POINTER(LPWSTR), 'ppstrId')),
@@ -353,7 +353,7 @@ class IMMDeviceCollection(IUnknown):
             HRESULT,
             'Item',
             (['in'], UINT, 'nDevice'),
-            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevice'),
+            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevice'),  # type: ignore
         ),
     )
 
@@ -371,7 +371,7 @@ class IMMDeviceEnumerator(IUnknown):
             'EnumAudioEndpoints',
             (['in'], DWORD, 'dataFlow'),
             (['in'], DWORD, 'dwStateMask'),
-            (['out'], POINTER(POINTER(IMMDeviceCollection)), 'ppDevices'),
+            (['out'], POINTER(POINTER(IMMDeviceCollection)), 'ppDevices'),  # type: ignore
         ),
         # HRESULT GetDefaultAudioEndpoint(
         # [in] EDataFlow dataFlow,
@@ -383,7 +383,7 @@ class IMMDeviceEnumerator(IUnknown):
             'GetDefaultAudioEndpoint',
             (['in'], DWORD, 'dataFlow'),
             (['in'], DWORD, 'role'),
-            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevices'),
+            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevices'),  # type: ignore
         ),
         # HRESULT GetDevice(
         # [in] LPCWSTR pwstrId,
@@ -393,7 +393,7 @@ class IMMDeviceEnumerator(IUnknown):
             HRESULT,
             'GetDevice',
             (['in'], LPCWSTR, 'pwstrId'),
-            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevice'),
+            (['out'], POINTER(POINTER(IMMDevice)), 'ppDevice'),  # type: ignore
         ),
         # HRESULT RegisterEndpointNotificationCallback(
         # [in] IMMNotificationClient *pClient);
@@ -416,7 +416,7 @@ class AudioUtilities:
         deviceEnumerator = comtypes.CoCreateInstance(
             CLSID_MMDeviceEnumerator, IMMDeviceEnumerator, comtypes.CLSCTX_INPROC_SERVER
         )
-        audio_input_devices = deviceEnumerator.GetDefaultAudioEndpoint(
+        audio_input_devices = deviceEnumerator.GetDefaultAudioEndpoint(  # type: ignore
             EDataFlow.eCapture.value, DEVICE_STATE.ACTIVE.value
         )
         if audio_input_devices is None:
@@ -428,12 +428,12 @@ class AudioUtilities:
     def muteMicrophone(self) -> None:
         mics = self.getMicrophones()
         try:
-            interface = mics.Activate(
+            interface = mics.Activate(  # type: ignore
                 IAudioEndpointVolume._iid_, comtypes.CLSCTX_ALL, None
             )
             logger.debug("Interfaces setup!")
-            volume_control_ptr = typing.cast(IAudioEndpointVolume, ctypes.cast(interface, POINTER(IAudioEndpointVolume)))
-            volume_control_ptr.SetMute(True, None)
+            volume_control_ptr = typing.cast(IAudioEndpointVolume, ctypes.cast(interface, POINTER(IAudioEndpointVolume)))  # type: ignore
+            volume_control_ptr.SetMute(True, None)  # type: ignore
             logger.debug("Microphone Should be mute")
             self.is_muted = True
         except Exception as e:
@@ -443,12 +443,12 @@ class AudioUtilities:
     def unMuteMicrophone(self) -> None:
         mics = self.getMicrophones()
         try:
-            interface = mics.Activate(
+            interface = mics.Activate(  # type: ignore
                 IAudioEndpointVolume._iid_, comtypes.CLSCTX_ALL, None
             )
             logger.debug("Interfaces setup!")
-            volume_control_ptr = typing.cast(IAudioEndpointVolume, ctypes.cast(interface, POINTER(IAudioEndpointVolume)))
-            volume_control_ptr.SetMute(False, None)
+            volume_control_ptr = typing.cast(IAudioEndpointVolume, ctypes.cast(interface, POINTER(IAudioEndpointVolume)))  # type: ignore
+            volume_control_ptr.SetMute(False, None)  # type: ignore
             logger.debug("Microphone Should be unmuted")
             self.is_muted = False
         except Exception as e:

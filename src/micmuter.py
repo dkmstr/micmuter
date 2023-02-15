@@ -33,11 +33,11 @@ class MicMuterWindow(QtWidgets.QMainWindow, muter.ui.micmuter_ui.Ui_mainWindow):
         if self.config.hotkey:
             self.hotKey.setText(muter.keycodes.vk_name_keys[self.config.hotkey].upper())
 
-        self.setHotkeyButton.clicked.connect(self.activateHotkeyCapture)
-        self.actionQuit.triggered.connect(self.app.quit)
-        self.actionMinimizeToTray.triggered.connect(self.close)
+        self.setHotkeyButton.clicked.connect(self.activateHotkeyCapture)  # type: ignore
+        self.actionQuit.triggered.connect(self.app.quit)  # type: ignore
+        self.actionMinimizeToTray.triggered.connect(self.close)  # type: ignore
 
-    def nativeEvent(self, eventType, message) -> typing.Tuple[object, int]:
+    def nativeEvent(self, eventType, message):
         try:
             if self.tray and eventType == "windows_generic_MSG":
                 msg = muter.system.events.as_event(message)
@@ -104,25 +104,25 @@ class MicMuterTray(QtWidgets.QSystemTrayIcon):
     ):
         super().__init__(icon, parent)
         self.setVisible(True)
-        self.activated.connect(self.checkShow)
+        self.activated.connect(self.checkShow)  # type: ignore
 
     def checkShow(self, reason: QtWidgets.QSystemTrayIcon.ActivationReason) -> None:
-        if reason == QtWidgets.QSystemTrayIcon.DoubleClick:
-            self.parent().show()
+        if reason == QtWidgets.QSystemTrayIcon.ActivationReason.DoubleClick:
+            self.parent().show()  # type: ignore
 
 
 def main() -> None:
     try:
         from PySide2.QtWinExtras import QtWin  # type: ignore
 
-        myappid = 'dkmaster.micmuter.micmuter.1.0.0'
+        myappid = 'dkmaster.micmuter.micmuter.1.1.0'
         QtWin.setCurrentProcessExplicitAppUserModelID(myappid)  # type: ignore
     except Exception:
         pass  # linux or mac will reach this, but this app is for windows mainly right now...
 
     app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    app.commitDataRequest.connect(lambda *p: app.quit())
+    app.commitDataRequest.connect(lambda *p: app.quit())  # type: ignore
 
     muter.ui.setThemeAsOS(app)
 
@@ -141,11 +141,11 @@ def main() -> None:
     # Creating the options
     menu = QtWidgets.QMenu()
     configure = QtGui.QAction("Configure")
-    configure.triggered.connect(lambda: mainWindow.show())
+    configure.triggered.connect(lambda: mainWindow.show())  # type: ignore
 
     # About
     about = QtGui.QAction("About")
-    about.triggered.connect(lambda: QtWidgets.QMessageBox.about(
+    about.triggered.connect(lambda: QtWidgets.QMessageBox.about(  # type: ignore
         mainWindow, 'Mic Muter', 
         'Simple aplication to mute/unmute microphone with one key\n' +
         'Developed by Adolfo Gómez & Mario Gómez 2021'
@@ -153,7 +153,7 @@ def main() -> None:
 
     # To quit the app
     quit = QtGui.QAction("Quit")
-    quit.triggered.connect(app.quit)
+    quit.triggered.connect(app.quit)  # type: ignore
 
     menu.addAction(configure)  # Adding the configure option to the menu
     menu.addSeparator()
